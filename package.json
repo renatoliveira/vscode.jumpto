@@ -10,14 +10,22 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:jumpto.helloWorld"
+    "onCommand:jumpto.jump"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "jumpto.helloWorld",
-        "title": "Hello World"
+        "command": "jumpto.jump",
+        "title": "Go to Line from here",
+        "shortTitle": "Go to Line from here"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "ctrl+alt+g",
+        "mac": "ctrl+cmd+g",
+        "command": "jumpto.jump"
       }
     ]
   },

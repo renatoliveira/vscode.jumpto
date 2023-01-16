@@ -1,26 +1,40 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	let jump = vscode.commands.registerCommand('jumpto.jump', async () => {
+		const linesToJumpInputResult = await vscode.window.showInputBox({
+			placeHolder: "[+|-] lines to jump",
+			prompt: "Number of lines to jump."
+		})
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "jumpto" is now active!');
+		if (!linesToJumpInputResult) {
+			return;
+		}
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('jumpto.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from jumpto!');
-	});
+		const linesToJump = Number.parseInt(linesToJumpInputResult, 10);
 
-	context.subscriptions.push(disposable);
+		const editor = vscode.window.activeTextEditor;
+		const position = editor?.selection.active;
+		const proposedNewLineNumber = position!.line + linesToJump;
+		let newLineNumber;
+
+		if (proposedNewLineNumber <= editor!.document.lineCount && proposedNewLineNumber > 0) {
+			newLineNumber = proposedNewLineNumber;
+		} else if (proposedNewLineNumber < 0) {
+			newLineNumber = 0;
+		} else {
+			newLineNumber = editor!.document.lineCount;
+		}
+
+		const newPosition = new vscode.Position(newLineNumber, 0);
+		const newSelection = new vscode.Selection(newPosition, newPosition);
+		const range = newLineNumber-1 < 0 ? 0 : newLineNumber-1;
+
+		editor!.selection = newSelection;
+		editor?.revealRange(editor?.document.lineAt(range).range);
+	})
+
+	context.subscriptions.push(jump);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
