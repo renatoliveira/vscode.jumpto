@@ -6,6 +6,10 @@
   "engines": {
     "vscode": "^1.74.0"
   },
+  "repository": {
+    "url": "https://github.com/renatoliveira/vscode.jumpto"
+  },
+  "publisher": "RenatoOliveira",
   "categories": [
     "Other"
   ],
