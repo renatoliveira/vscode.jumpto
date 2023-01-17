@@ -2,13 +2,14 @@
   "name": "jumpto",
   "displayName": "jumpto",
   "description": "Allows you to jump lines in your source code using + and - and a number to jump a certain number of lines.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.74.0"
   },
   "repository": {
     "url": "https://github.com/renatoliveira/vscode.jumpto"
   },
+  "icon": "images/icon.png",
   "publisher": "RenatoOliveira",
   "categories": [
     "Other"
